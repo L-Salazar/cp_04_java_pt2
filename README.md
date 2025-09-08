@@ -12,6 +12,15 @@ Video: https://youtu.be/E141I8tXXYc?feature=shared
 
 Foi utilizado Azure Web Apps para o deploy
 
+# Imagens do projeto
+
+<img width="1668" height="519" alt="image" src="https://github.com/user-attachments/assets/1d2e8b1a-d0d0-4218-b4fa-9aaebafdba99" />
+<img width="857" height="922" alt="image" src="https://github.com/user-attachments/assets/e594b239-07e8-47ad-9588-c4195ad4ac28" />
+<img width="1215" height="595" alt="image" src="https://github.com/user-attachments/assets/7ab1c09a-f95a-4056-b438-0dbea4006294" />
+<img width="1674" height="835" alt="image" src="https://github.com/user-attachments/assets/b94ae027-e0d1-4aa0-bb44-287ac171e166" />
+<img width="1675" height="450" alt="image" src="https://github.com/user-attachments/assets/7e48d74d-3226-41d3-9d2c-85054b7db43c" />
+<img width="1672" height="562" alt="image" src="https://github.com/user-attachments/assets/9dc85ed7-9437-4ce0-a8ff-7725af2b2959" />
+
 # Performance Kids — Spring Boot (Thymeleaf + JPA)
 
 Aplicação web para **gestão de brinquedos, categorias e funcionários**, construída com **Spring Boot**, **Thymeleaf**, **Spring Data JPA**, **Bean Validation** e **Lombok**. O visual das páginas usa **Tailwind CSS (CDN)** com um padrão consistente (header em gradiente, cards com sombra, botões com gradiente).
