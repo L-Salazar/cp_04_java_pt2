@@ -12,6 +12,10 @@ Video: https://youtu.be/E141I8tXXYc?feature=shared
 
 Foi utilizado Azure Web Apps para o deploy
 
+# Parte 1 do projeto
+
+Link: https://github.com/L-Salazar/performance_kids
+
 # Imagens do projeto
 
 <img width="1668" height="519" alt="image" src="https://github.com/user-attachments/assets/1d2e8b1a-d0d0-4218-b4fa-9aaebafdba99" />
@@ -21,9 +25,15 @@ Foi utilizado Azure Web Apps para o deploy
 <img width="1675" height="450" alt="image" src="https://github.com/user-attachments/assets/7e48d74d-3226-41d3-9d2c-85054b7db43c" />
 <img width="1672" height="562" alt="image" src="https://github.com/user-attachments/assets/9dc85ed7-9437-4ce0-a8ff-7725af2b2959" />
 
+# Configuração spring initializer
+
+<img width="1305" height="777" alt="image" src="https://github.com/user-attachments/assets/8f1420a1-199c-4548-97c6-cf6f52d43a29" />
+
+Obs.: Projeto migrado posteriormente para o Java 17 para maior compatibilidade no deploy
+
 # Performance Kids — Spring Boot (Thymeleaf + JPA)
 
-Aplicação web para **gestão de brinquedos, categorias e funcionários**, construída com **Spring Boot**, **Thymeleaf**, **Spring Data JPA**, **Bean Validation** e **Lombok**. O visual das páginas usa **Tailwind CSS (CDN)** com um padrão consistente (header em gradiente, cards com sombra, botões com gradiente).
+Aplicação web feita no IntelliJ para **gestão de brinquedos, categorias e funcionários**, construída com **Spring Boot**, **Thymeleaf**, **Spring Data JPA**, **Bean Validation** e **Lombok**. O visual das páginas usa **Tailwind CSS (CDN)** com um padrão consistente (header em gradiente, cards com sombra, botões com gradiente).
 
 ## ✨ Funcionalidades
 - **Brinquedos**: CRUD completo (lista, novo, editar, excluir) com vínculo a **Categoria**.
