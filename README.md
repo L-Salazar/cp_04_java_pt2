@@ -4,9 +4,11 @@ Leonardo Salazar - 557484
 
 Alexsandro Macedo - 557068
 
-# Deploy
+# Deploy e vídeo da explicação
 
-Link: https://cp-java-557484.azurewebsites.net/brinquedos
+Site com deploy: https://cp-java-557484.azurewebsites.net/brinquedos
+
+Video: https://youtu.be/E141I8tXXYc?feature=shared
 
 Foi utilizado Azure Web Apps para o deploy
 
