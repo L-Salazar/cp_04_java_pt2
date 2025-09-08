@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Categorias • Performance Kids</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        animation: {
+                            'fade-in': 'fadeIn .5s ease-out both',
+                            'pop': 'pop .35s ease-out both'
+                        },
+                        keyframes: {
+                            fadeIn: { from:{opacity:0, transform:'translateY(6px)'}, to:{opacity:1, transform:'translateY(0)'} },
+                            pop: { from:{transform:'scale(.96)', opacity:.0}, to:{transform:'scale(1)', opacity:1} }
+                        }
+                    }
+                }
+            }
+        }
+
+        // filtro simples no cliente
+        function filtrar(e){
+            const q = e.value.toLowerCase();
+            document.querySelectorAll('#tbody tr[data-row]').forEach(tr=>{
+                const txt = tr.innerText.toLowerCase();
+                tr.style.display = txt.includes(q) ? '' : 'none';
+            });
+        }
+
+        // confirma exclusão
+        function confirmarExcluir(url){
+            if (confirm('Tem certeza que deseja excluir esta categoria?')) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 text-slate-900">
+
+<!-- HEADER -->
+<header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-10 text-white">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                              d="M4 7h16M4 12h16M4 17h16"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold leading-tight">Categorias</h1>
+                    <p class="text-white/80">Organize os tipos de brinquedos</p>
+                </div>
+            </div>
+
+            <!-- atalhos (opcional) -->
+            <div class="hidden md:flex items-center gap-2">
+                <a th:href="@{/brinquedos}"
+                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl
+                    text-white bg-white/10 hover:bg-white/20
+                    border border-white/20 backdrop-blur
+                    shadow-lg shadow-black/10
+                    focus:outline-none focus:ring-4 focus:ring-white/30 transition">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M20 13V7a2 2 0 00-2-2h-3l-1-1H10L9 5H6a2 2 0 00-2 2v6m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0H4"/>
+                    </svg>
+                    Brinquedos
+                </a>
+                <a th:href="@{/funcionarios}"
+                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl
+                    text-white bg-white/10 hover:bg-white/20
+                    border border-white/20 backdrop-blur
+                    shadow-lg shadow-black/10
+                    focus:outline-none focus:ring-4 focus:ring-white/30 transition">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z"/>
+                    </svg>
+                    Funcionários
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- CONTEÚDO -->
+<main class="max-w-6xl mx-auto px-6 -mt-6 pb-16">
+    <section class="bg-white shadow-xl shadow-indigo-100 rounded-2xl p-6 animate-pop">
+
+        <!-- barra de ações -->
+        <div class="flex flex-col md:flex-row md:items-center gap-4 justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-sm font-medium">
+                    Total: <span th:text="${#lists.size(categorias)}">0</span>
+                </div>
+                <div class="hidden md:block text-slate-400">•</div>
+                <input type="search" oninput="filtrar(this)" placeholder="Filtrar por nome…"
+                       class="w-full md:w-80 px-4 py-2.5 rounded-xl border border-slate-200
+                        focus:outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-400"/>
+            </div>
+
+            <a th:href="@{/categorias/novo}"
+               class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-white
+                  bg-gradient-to-r from-indigo-600 to-fuchsia-600
+                  hover:from-indigo-500 hover:to-fuchsia-500
+                  focus:ring-4 focus:ring-indigo-100 shadow-lg shadow-indigo-100 transition">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 6v12m6-6H6"/>
+                </svg>
+                Nova categoria
+            </a>
+        </div>
+
+        <!-- tabela -->
+        <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="min-w-full text-sm">
+                <thead class="bg-slate-50 text-slate-600">
+                <tr>
+                    <th class="text-left font-semibold py-3.5 px-4">ID</th>
+                    <th class="text-left font-semibold py-3.5 px-4">Nome</th>
+                    <th class="text-right font-semibold py-3.5 px-4">Ações</th>
+                </tr>
+                </thead>
+
+                <tbody id="tbody" class="divide-y divide-slate-100">
+                <!-- linha -->
+                <tr th:each="c : ${categorias}" data-row class="hover:bg-slate-50/70">
+                    <td class="py-3.5 px-4 text-slate-500" th:text="${c.id}">1</td>
+                    <td class="py-3.5 px-4 font-medium" th:text="${c.nome}">Nome da categoria</td>
+                    <td class="py-3.5 px-4 text-right">
+                        <div class="inline-flex items-center gap-2">
+                            <a th:href="@{/categorias/editar/{id}(id=${c.id})}"
+                               class="px-3 py-1.5 rounded-lg border border-slate-200 hover:border-indigo-300
+                            hover:bg-indigo-50 text-slate-700 hover:text-indigo-700">
+                                Editar
+                            </a>
+                            <button type="button"
+                                    th:onclick="|confirmarExcluir('@{/categorias/excluir/{id}(id=${c.id})}')|"
+                                    class="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-700 hover:bg-rose-50">
+                                Excluir
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- vazio -->
+                <tr th:if="${#lists.isEmpty(categorias)}">
+                    <td colspan="3" class="py-10 text-center text-slate-500">
+                        Nenhuma categoria cadastrada.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- flash message (opcional) -->
+        <div th:if="${msg}" class="mt-4 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span th:text="${msg}">Operação realizada com sucesso!</span>
+        </div>
+    </section>
+</main>
+
+<!-- RODAPÉ -->
+<footer class="text-center text-slate-400 text-sm pb-10">
+    &copy; <span th:text="${#calendars.format(#dates.createNow(), 'yyyy')}">2025</span> Performance Kids.
+</footer>
+</body>
+</html>

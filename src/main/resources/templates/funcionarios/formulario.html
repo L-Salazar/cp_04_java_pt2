@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title th:text="${funcionario.id == null ? 'Novo Funcionário' : 'Editar Funcionário'}">Funcionário</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        animation: {
+                            'fade-in': 'fadeIn .5s ease-out both',
+                            'slide-up': 'slideUp .6s ease-out both',
+                        },
+                        keyframes: {
+                            fadeIn: { from:{opacity:0, transform:'translateY(6px)'}, to:{opacity:1, transform:'translateY(0)'} },
+                            slideUp: { from:{opacity:0, transform:'translateY(30px)'}, to:{opacity:1, transform:'translateY(0)'} }
+                        }
+                    }
+                }
+            }
+        }
+        function toggleSenha() {
+            const i = document.getElementById('campo-senha');
+            i.type = i.type === 'password' ? 'text' : 'password';
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 text-slate-900">
+
+<!-- Header -->
+<header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 py-10 text-white">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0ZM12 14c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold leading-tight" th:text="${funcionario.id == null ? 'Novo Funcionário' : 'Editar Funcionário'}">Funcionário</h1>
+                <p class="text-white/80">Preencha os dados abaixo</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main -->
+<main class="max-w-3xl mx-auto px-6 -mt-6 pb-16">
+    <section class="bg-white shadow-xl shadow-indigo-100 rounded-2xl p-6 animate-slide-up">
+
+        <form th:object="${funcionario}" method="post" class="space-y-6">
+
+            <!-- Nome -->
+            <div>
+                <label class="block mb-1.5 font-medium text-slate-700">Nome</label>
+                <input th:field="*{nome}"
+                       type="text"
+                       placeholder="Nome completo"
+                       class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-4
+                        border-slate-200 focus:border-indigo-400 focus:ring-indigo-100
+                        "
+                       th:classappend="${#fields.hasErrors('nome')}? 'border-rose-300 ring-rose-100' : ''"
+                       required maxlength="100"/>
+                <p class="mt-1 text-sm text-rose-600" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">erro</p>
+            </div>
+
+            <!-- E-mail -->
+            <div>
+                <label class="block mb-1.5 font-medium text-slate-700">E-mail</label>
+                <input th:field="*{email}"
+                       type="email"
+                       placeholder="email@exemplo.com"
+                       class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-4
+                        border-slate-200 focus:border-indigo-400 focus:ring-indigo-100
+                        "
+                       th:classappend="${#fields.hasErrors('email')}? 'border-rose-300 ring-rose-100' : ''"
+                       required maxlength="150"/>
+                <p class="mt-1 text-sm text-rose-600" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">erro</p>
+            </div>
+
+            <!-- Cargo (com sugestões) -->
+            <div>
+                <label class="block mb-1.5 font-medium text-slate-700">Cargo</label>
+                <input th:field="*{cargo}"
+                       list="opcoes-cargo"
+                       placeholder="ADMIN, OPERADOR, VENDEDOR…"
+                       class="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-4
+                        border-slate-200 focus:border-indigo-400 focus:ring-indigo-100
+                        "
+                       th:classappend="${#fields.hasErrors('cargo')}? 'border-rose-300 ring-rose-100' : ''"
+                       required maxlength="50"/>
+                <datalist id="opcoes-cargo">
+                    <option value="ADMIN"></option>
+                    <option value="OPERADOR"></option>
+                    <option value="VENDEDOR"></option>
+                    <option value="GERENTE"></option>
+                    <option value="ATENDENTE"></option>
+                </datalist>
+                <p class="mt-1 text-sm text-rose-600" th:if="${#fields.hasErrors('cargo')}" th:errors="*{cargo}">erro</p>
+            </div>
+
+            <!-- Senha -->
+            <div>
+                <div class="flex items-center justify-between">
+                    <label class="block mb-1.5 font-medium text-slate-700">Senha</label>
+                    <span class="text-xs text-slate-500"
+                          th:text="${funcionario.id == null ? 'mín. 6 caracteres' : 'preencha apenas se for alterar'}">
+              mín. 6 caracteres
+            </span>
+                </div>
+
+                <div class="relative">
+                    <input id="campo-senha"
+                           th:field="*{senha}"
+                           type="password"
+                           placeholder="••••••••"
+                           th:attr="required=${funcionario.id == null}"
+                    minlength="6" maxlength="60"
+                    class="w-full px-4 py-3 pr-12 rounded-xl border focus:outline-none focus:ring-4
+                    border-slate-200 focus:border-indigo-400 focus:ring-indigo-100" />
+                    <button type="button" onclick="toggleSenha()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                <p class="mt-1 text-sm text-rose-600" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}">erro</p>
+            </div>
+
+            <!-- Ações -->
+            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <a th:href="@{/funcionarios}"
+                   class="inline-flex items-center justify-center px-4 py-3 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50">
+                    Voltar
+                </a>
+
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <!-- SALVAR (novo) -->
+                <button
+                        type="submit"
+                        th:if="${funcionario.id} == null"
+                        th:formaction="@{/funcionarios/salvar}"
+                        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+             text-white bg-gradient-to-r from-indigo-600 to-fuchsia-600
+             hover:from-indigo-500 hover:to-fuchsia-500
+             focus:outline-none focus:ring-4 focus:ring-indigo-100
+             shadow-lg shadow-indigo-100 active:scale-[.98] transition-all">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Salvar
+                </button>
+
+                <!-- ATUALIZAR (edição) -->
+                <button
+                        type="submit"
+                        th:unless="${funcionario.id} == null"
+                        th:formaction="@{/funcionarios/alterar/{id}(id=${funcionario.id})}"
+                        class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+             text-white bg-gradient-to-r from-indigo-600 to-fuchsia-600
+             hover:from-indigo-500 hover:to-fuchsia-500
+             focus:outline-none focus:ring-4 focus:ring-indigo-100
+             shadow-lg shadow-indigo-100 active:scale-[.98] transition-all">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 4v6h6M20 20v-6h-6M20 4l-8 8M4 20l8-8"/>
+                    </svg>
+                    Atualizar
+                </button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer class="text-center text-slate-400 text-sm pb-10">
+    &copy; <span th:text="${#calendars.format(#dates.createNow(), 'yyyy')}">2025</span> Performance Kids.
+</footer>
+</body>
+</html>
